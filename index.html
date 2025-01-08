@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Card Flip</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #3b3b3b;
+            font-family: Arial, sans-serif;
+        }
+
+        .card-container {
+            perspective: 1000px;
+            position: relative;
+            width: calc(1003px * 0.5);
+            height: calc(591px * 0.5);
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.8s;
+            position: relative;
+        }
+
+        .card:hover .indicator {
+            opacity: 0;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .front {
+            background: url('1.png') center/cover no-repeat;
+        }
+
+        .back {
+            background: url('2.png') center/cover no-repeat;
+            transform: rotateY(180deg);
+        }
+
+        .profile {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            z-index: 100;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            background: url('profile.png') center/cover no-repeat;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.5s ease, transform 0.5s ease;
+        }
+
+        .profile.highlight {
+            box-shadow: 0 0 20px 5px #ecececa0;
+            transform: scale(1.1);
+        }
+
+        .indicator {
+            position: absolute;
+            margin-top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 10px;
+            border-radius: 20px;
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .footer a {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            background-color: #555;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .footer a:hover {
+            background-color: #0077b5; /* LinkedIn color as a base */
+        }
+
+        .footer a i {
+            font-size: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .card-container {
+                width: calc(1003px * 0.4);
+                height: calc(591px * 0.4);
+            }
+
+            .profile {
+                width: 80px;
+                height: 80px;
+                top: -40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-container {
+                width: calc(1003px * 0.3);
+                height: calc(591px * 0.3);
+            }
+
+            .profile {
+                width: 60px;
+                height: 60px;
+                top: -30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="profile" id="profile"></div>
+        <div class="card" id="businessCard">
+            <div class="card-face front"></div>
+            <div class="card-face back"></div>
+        </div>
+        <div class="indicator" id="indicator">Click to see more</div>
+    </div>
+
+    <div class="footer">
+        <a href="https://www.linkedin.com/in/shaheenkp/" title="LinkedIn" ><i class="fab fa-linkedin"></i></a>
+        <a href="https://wa.me/918157980307" title="WhatsApp" ><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61567825325919&mibextid=ZbWKwL" title="Facebook" ><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/Msk012005" title="Twitter" ><i class="fab fa-twitter"></i></a>
+        <a href="mailto:ms.shaheenkp@gmail.com" title="Email" ><i class="fas fa-envelope"></i></a>
+        <a href="https://www.instagram.com/___zcl3_" title="Instagram" ><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a34eb846e5.js" crossorigin="anonymous"></script>
+    <script>
+        const card = document.getElementById('businessCard');
+        const profile = document.getElementById('profile');
+        const indicator = document.getElementById('indicator');
+
+        const flipCard = () => {
+            card.classList.toggle('flipped');
+            profile.classList.add('highlight');
+            setTimeout(() => {
+                profile.classList.remove('highlight');
+            }, 1500); // Remove highlight after 1.5 seconds
+        };
+
+        card.addEventListener('click', flipCard);
+        indicator.addEventListener('click', flipCard);
+    </script>
+</body>
+</html>
