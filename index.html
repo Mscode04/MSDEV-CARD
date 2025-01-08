@@ -122,6 +122,28 @@
             font-size: 16px;
         }
 
+        /* Download Button */
+        .download-btn {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .download-btn button {
+            background-color: #555;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn button:hover {
+            background-color: #005f87;
+        }
+
         @media (max-width: 768px) {
             .card-container {
                 width: calc(1003px * 0.4);
@@ -160,12 +182,16 @@
     </div>
 
     <div class="footer">
-        <a href="https://www.linkedin.com/in/shaheenkp/" title="LinkedIn" ><i class="fab fa-linkedin"></i></a>
-        <a href="https://wa.me/918157980307" title="WhatsApp" ><i class="fab fa-whatsapp"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=61567825325919&mibextid=ZbWKwL" title="Facebook" ><i class="fab fa-facebook-f"></i></a>
-        <a href="https://x.com/Msk012005" title="Twitter" ><i class="fab fa-twitter"></i></a>
-        <a href="mailto:ms.shaheenkp@gmail.com" title="Email" ><i class="fas fa-envelope"></i></a>
-        <a href="https://www.instagram.com/___zcl3_" title="Instagram" ><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/shaheenkp/" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="https://wa.me/918157980307" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61567825325919&mibextid=ZbWKwL" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://x.com/Msk012005" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="mailto:ms.shaheenkp@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.instagram.com/___zcl3_" title="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <div class="download-btn">
+        <button id="downloadBtn">Download Business Card</button>
     </div>
 
     <script src="https://kit.fontawesome.com/a34eb846e5.js" crossorigin="anonymous"></script>
@@ -173,6 +199,7 @@
         const card = document.getElementById('businessCard');
         const profile = document.getElementById('profile');
         const indicator = document.getElementById('indicator');
+        const downloadBtn = document.getElementById('downloadBtn');
 
         const flipCard = () => {
             card.classList.toggle('flipped');
@@ -184,6 +211,37 @@
 
         card.addEventListener('click', flipCard);
         indicator.addEventListener('click', flipCard);
+
+        downloadBtn.addEventListener('click', () => {
+            const backElement = document.querySelector('.back');
+            const backBackground = window.getComputedStyle(backElement).backgroundImage;
+        
+            // Extract the actual URL from the background-image property
+            const imgSrc = backBackground.replace('url("', '').replace('")', '');
+        
+            const imgBack = new Image();
+            imgBack.crossOrigin = 'anonymous'; // To allow cross-origin requests
+        
+            imgBack.src = imgSrc;
+            imgBack.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = imgBack.width;  // Use full image width
+                canvas.height = imgBack.height; // Use full image height
+        
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(imgBack, 0, 0, canvas.width, canvas.height);
+        
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL();  // Get the full image as a data URL
+                link.download = 'BusinessCard_Shaheen.png';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            };
+        });
+        
+        
+
     </script>
 </body>
 </html>
